@@ -1,0 +1,75 @@
+int button0;
+int button1;
+int button2;
+int powerButton;
+boolean gameOn;
+int randNum;
+int grid[4][3] = {
+    {4, 5, 6},
+    {7, 8, 9},
+    {10, 11, 12},
+    {13, A0, A1}
+  };
+int stat[4][3] = {
+    {0, 0, 0},
+    {1, 0, 1},
+    {1, 1, 0},
+    {0, 0, 1}
+  };
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+
+  button0 = 0;
+  button1 = 1;
+  button2 = 2;
+  powerButton = 3;
+  gameOn = true;
+  
+  
+
+
+  for(int r = 0; r < 4; r++)
+  {
+    for(int c = 0; c < 3; c++)
+    {
+      pinMode(grid[r][c], OUTPUT);
+    }
+  }
+
+
+  pinMode(button0, INPUT);
+  pinMode(button1, INPUT);
+  pinMode(button2, INPUT);
+  pinMode(powerButton, INPUT);
+  
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+  
+  randNum = random(1,4);
+  newLights();
+  display();
+  
+  
+}
+
+void display(){
+  for(int r = 0; r < 4; r++)
+  {
+    for(int c = 0; c < 3; c++)
+    {
+      Serial.print(grid[r][c]);
+      digitalWrite(grid[r][c], stat[r][c]);
+    }
+    Serial.println();
+  }
+}
+void newLights(){
+    int rand = random(0,3);
+    Serial.println(rand);
+    stat[3][rand] = 1;
+}
